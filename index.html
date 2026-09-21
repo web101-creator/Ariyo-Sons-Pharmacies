@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ariyo & sons; Sons Pharmacy, Kabba | Order medicines, send a prescription, get advice</title>
+  <meta name="description" content="Ariyo & sons; Sons Pharmacy in Kabba, Kogi State. Prescription and over-the-counter medicines, health and wellness products, medication advice, and easy online orders.">
+  <meta name="theme-color" content="#0F3D3A">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F3D3A'/%3E%3Cpath d='M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z' fill='%23E9A23B'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Pharmacy",
+    "name": "Ariyo & Sons Pharmacy",
+    "telephone": "+234 903 679 3927",
+    "email": "ariyoandsonpharmacy@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ayede\u2013Okeoffin Road, opposite First ECWA Church, behind Kabba Township Stadium",
+      "addressRegion": "Kogi State",
+      "addressCountry": "NG"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#home" aria-label="Ariyo and Sons Pharmacy, home">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="38" height="38" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#0F3D3A"/>
+          <path d="M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z" fill="#E9A23B"/>
+        </svg>
+        <span>Ariyo & sons; Sons<small>Pharmacy</small></span>
+      </a>
+
+      <nav id="nav" class="nav" aria-label="Main">
+        <a href="#shop">Medicines</a>
+        <a href="#prescription">Prescriptions</a>
+        <a href="#refill">Refills</a>
+        <a href="#services">Services</a>
+        <a href="#visit">Visit us</a>
+        <a href="#faq">Questions</a>
+      </nav>
+
+      <button id="cart-open" class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2.2l2.1 10.2a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L20 8H6.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="19.5" r="1.4" fill="currentColor"/><circle cx="16.5" cy="19.5" r="1.4" fill="currentColor"/></svg>
+        <span>My order</span>
+        <span id="cart-count" class="badge" aria-live="polite">0</span>
+      </button>
+
+      <button id="nav-toggle" class="menu-btn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <noscript>
+    <p class="noscript">This site needs JavaScript to show medicines and place orders. Please call us on <span data-cfg="phoneDisplay">+234 903 679 3927</span>.</p>
+  </noscript>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section id="home" class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>Your medicines, ready when you are.</h1>
+          <p class="lead">Search our shelves, send your prescription, or set a refill reminder. Collect in store or ask for delivery.</p>
+          <div class="hero-actions">
+            <a class="btn btn-amber" href="#shop">Browse medicines</a>
+            <a class="btn btn-outline-light" href="#prescription">Send a prescription</a>
+          </div>
+        </div>
+
+        <div class="bottle">
+          <div class="bottle-cap"></div>
+          <div class="bottle-neck"></div>
+          <div class="bottle-body">
+            <div class="rx-label">
+              <div class="rx-head">
+                <span class="rx-mark">Rx</span>
+                <strong data-cfg="name">Ariyo & sons; Sons Pharmacy</strong>
+              </div>
+              <dl class="rx-lines">
+                <div><dt>Order</dt><dd>From your phone, any time</dd></div>
+                <div><dt>Collect</dt><dd>In store, or ask for delivery</dd></div>
+                <div><dt>Ask us</dt><dd>Before you take anything you are unsure about</dd></div>
+              </dl>
+              <p class="rx-status"><span id="status-dot" class="dot"></span><span id="status-text">Checking opening hours</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SHOP ============ -->
+    <section id="shop" class="section section-white">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Find a medicine</h2>
+          <p>Search our shelves and build an order. We confirm stock and the total with you on WhatsApp before you pay.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-field">
+            <label for="shop-search">Search by name</label>
+            <input id="shop-search" type="search" placeholder="For example: paracetamol" autocomplete="off">
+          </div>
+          <p id="result-count" class="result-count" aria-live="polite"></p>
+        </div>
+
+        <div id="chips" class="chips" role="group" aria-label="Filter by category"></div>
+
+        <ul id="shelf" class="shelf"></ul>
+
+        <div id="empty" class="empty" hidden>
+          <p>We could not find that on this list. It may still be in store.</p>
+          <button id="empty-ask" class="btn btn-green btn-sm" type="button">Ask if we have it</button>
+        </div>
+
+        <p class="fineprint">Prices shown are a guide and can change. Medicines marked "Prescription needed" are only given out with a valid prescription.</p>
+      </div>
+    </section>
+
+    <!-- ============ PRESCRIPTION ============ -->
+    <section id="prescription" class="section section-mint">
+      <div class="wrap split">
+        <div>
+          <h2>Send us your prescription</h2>
+          <p class="section-intro">Fill in your details and WhatsApp opens with your message ready. Attach a photo of the prescription in the chat and we will reply when it is prepared.</p>
+          <ol class="steps">
+            <li><strong>Send your details.</strong> Name, phone and how you want to get your medicine.</li>
+            <li><strong>Attach the prescription.</strong> A clear photo of the whole page, in the WhatsApp chat.</li>
+            <li><strong>We confirm.</strong> We check it, prepare it and tell you the total before you pay.</li>
+          </ol>
+        </div>
+
+        <form id="rx-form" class="panel" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="rx-name">Your name</label>
+              <input id="rx-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="rx-phone">Phone number</label>
+              <input id="rx-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+            </div>
+            <div class="field full">
+              <label for="rx-method">How do you want to get it?</label>
+              <select id="rx-method" name="method">
+                <option value="pickup">I will collect in store</option>
+                <option value="delivery">Deliver to me</option>
+              </select>
+            </div>
+            <div class="field full js-address" hidden>
+              <label for="rx-address">Delivery address</label>
+              <textarea id="rx-address" name="address" rows="2" autocomplete="street-address"></textarea>
+            </div>
+            <div class="field full">
+              <label for="rx-details">Anything we should know? (optional)</label>
+              <textarea id="rx-details" name="details" rows="3" placeholder="For example: I take this every month, or I am allergic to penicillin."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-green" type="submit">Continue on WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ REFILL ============ -->
+    <section id="refill" class="section section-white">
+      <div class="wrap split">
+        <div>
+          <h2>Never run out of a regular medicine</h2>
+          <p class="section-intro">Tell us what you take and how many days it lasts. This page shows when it is time to refill. Reminders are saved on this device only.</p>
+
+          <form id="refill-form" class="panel panel-plain" novalidate>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="rf-med">Medicine</label>
+                <input id="rf-med" name="med" type="text" placeholder="For example: Vitamin C 1000mg" required>
+              </div>
+              <div class="field">
+                <label for="rf-start">Started on</label>
+                <input id="rf-start" name="start" type="date" required>
+              </div>
+              <div class="field">
+                <label for="rf-days">Lasts (days)</label>
+                <input id="rf-days" name="days" type="number" min="1" max="365" value="30" inputmode="numeric" required>
+              </div>
+            </div>
+            <button class="btn btn-green" type="submit">Save reminder</button>
+          </form>
+        </div>
+
+        <div>
+          <h3 class="list-title">Your reminders</h3>
+          <ul id="refill-list" class="refill-list"></ul>
+          <p id="refill-empty" class="muted">No reminders yet. Add a medicine and it will show here.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section id="services" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What we do</h2>
+        </div>
+        <dl class="services">
+          <div>
+            <dt>Prescription and over-the-counter medicines</dt>
+            <dd>Bring or send your prescription, or ask for medicines you can buy without one. We confirm before you pay.</dd>
+          </div>
+          <div>
+            <dt>General pharmaceutical services</dt>
+            <dd>Everyday pharmacy help for you and your family.</dd>
+          </div>
+          <div>
+            <dt>Medication advice and counselling</dt>
+            <dd>Ask how to take a medicine, what side effects to expect and what not to mix it with.</dd>
+          </div>
+          <div>
+            <dt>Patient medication support</dt>
+            <dd>Help to understand and keep up with your treatment, including regular medicines.</dd>
+          </div>
+          <div>
+            <dt>Health and wellness products</dt>
+            <dd>Vitamins, supplements and everyday health products.</dd>
+          </div>
+          <div>
+            <dt>Medical supplies</dt>
+            <dd>First aid items and simple medical supplies for home use.</dd>
+          </div>
+          <div>
+            <dt>Online enquiries and orders</dt>
+            <dd>Ask about a medicine, or send your order on WhatsApp, from your phone.</dd>
+          </div>
+          <div>
+            <dt>Customer support</dt>
+            <dd>Call, message or visit us with any question about your order.</dd>
+          </div>
+          <div>
+            <dt>Medicine delivery</dt>
+            <dd>Ask for delivery when you order. We tell you if we can deliver to you and confirm the fee.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ VISIT ============ -->
+    <section id="visit" class="section section-mint">
+      <div class="wrap split">
+        <div>
+          <h2>Visit or call us</h2>
+          <address class="contact">
+            <p data-cfg="address">Ayede–Okeoffin Road, opposite First ECWA Church, behind Kabba Township Stadium, Kogi State, Nigeria</p>
+            <p><a data-cfg-tel href="tel:" ><span data-cfg="phoneDisplay">+234 903 679 3927</span></a></p>
+            <p><a data-cfg-mail href="mailto:"><span data-cfg="email">ariyoandsonpharmacy@gmail.com</span></a></p>
+          </address>
+          <a class="btn btn-green" data-cfg-map href="#" target="_blank" rel="noopener">Get directions</a>
+        </div>
+
+        <div class="panel">
+          <h3 class="list-title">Opening hours</h3>
+          <table class="hours">
+            <caption class="sr-only">Opening hours by day</caption>
+            <tbody id="hours-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="section section-white">
+      <div class="wrap faq-wrap">
+        <div class="section-head">
+          <h2>Common questions</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Do I need a prescription?</summary>
+            <p>Some medicines, such as antibiotics, are only given with a prescription from a doctor. Many others you can buy without one. If you are not sure, ask us.</p>
+          </details>
+          <details>
+            <summary>How do I pay?</summary>
+            <p>We confirm your total on WhatsApp first. You then pay in store, by bank transfer or on delivery.</p>
+          </details>
+          <details>
+            <summary>Do you deliver?</summary>
+            <p>Ask for delivery when you order. We will tell you if we can deliver to your area and confirm the fee and time with you.</p>
+          </details>
+          <details>
+            <summary>Can I return a medicine?</summary>
+            <p>For your safety, we cannot take back medicines once they leave the pharmacy, unless we made a mistake. Check your order before you leave or when it arrives.</p>
+          </details>
+          <details>
+            <summary>How do refill reminders work?</summary>
+            <p>You enter the medicine and how many days it lasts. The reminder is saved in your browser on this device and shows when a refill is due. It does not send messages.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <p><strong data-cfg="name">Ariyo & sons; Sons Pharmacy</strong><br>& copy; <span id="year">2026</span>. All rights reserved.</p>
+      <p class="disclaimer">Information on this site is not medical advice. Read the label, and ask a pharmacist or doctor if you are unsure.</p>
+    </div>
+  </footer>
+
+  <!-- ============ WHATSAPP BUTTON ============ -->
+  <a id="wa-float" class="wa-float" href="#" aria-label="Chat with us on WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.5c-.4 1.6.6 3.6 2.3 5.2 1.700 1.500 3.500 2.200 5 1.800l.6-1.700-2.100-1-.9.9c-.9-.4-2-1.400-2.500-2.400l.8-.8-.9-2.100z" fill="currentColor"/></svg>
+    <span>Chat on WhatsApp</span>
+  </a>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div id="overlay" class="overlay"></div>
+  <aside id="cart" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="drawer-head">
+      <h2 id="cart-title">My order</h2>
+      <button id="cart-close" class="icon-btn" type="button" aria-label="Close order">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <p id="cart-empty" class="muted">Your order is empty. Add medicines from the list and they will show here.</p>
+      <ul id="cart-items" class="cart-items"></ul>
+      <p id="cart-note" class="note" hidden>Some items need a prescription. Attach a photo of it in the WhatsApp chat.</p>
+    </div>
+
+    <form id="checkout" class="drawer-foot" novalidate>
+      <div class="total-row"><span>Estimated total</span><strong id="cart-total">&#8358;0</strong></div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="co-name">Your name</label>
+          <input id="co-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="co-phone">Phone number</label>
+          <input id="co-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+        </div>
+        <div class="field full">
+          <label for="co-method">How do you want to get it?</label>
+          <select id="co-method" name="method">
+            <option value="pickup">I will collect in store</option>
+            <option value="delivery">Deliver to me</option>
+          </select>
+        </div>
+        <div class="field full js-address" hidden>
+          <label for="co-address">Delivery address</label>
+          <textarea id="co-address" name="address" rows="2" autocomplete="street-address"></textarea>
+        </div>
+      </div>
+      <button id="checkout-send" class="btn btn-green btn-block" type="submit" disabled>Send order on WhatsApp</button>
+      <button id="clear-cart" class="link-btn" type="button">Clear order</button>
+    </form>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
