@@ -15,6 +15,9 @@ const CONFIG = {
   whatsapp: "2349036793927",              // international format, digits only. Change if your WhatsApp number is different
   email: "ariyoandsonpharmacy@gmail.com",
   address: "Ayede–Okeoffin Road, opposite First ECWA Church, behind Kabba Township Stadium, Kogi State, Nigeria",
+  // Exact pin from your Google Maps embed. Update these if you re-drop the pin.
+  mapLat: 7.841118421969191,
+  mapLng: 6.081299070550022,
   currency: "\u20A6",                     // Naira sign
   // Opening hours in 24-hour time. 0 = Sunday ... 6 = Saturday. Use null for closed.
   hours: {
@@ -165,6 +168,48 @@ function applyConfig() {
     a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.name + " " + CONFIG.address);
   });
   $("#year").textContent = new Date().getFullYear();
+}
+
+/* ---------- Directions: current location -> pharmacy ---------- */
+function destinationParam() {
+  return CONFIG.mapLat + "," + CONFIG.mapLng;
+}
+function openPharmacyOnMap() {
+  window.open("https://www.google.com/maps/dir/?api=1&destination=" + destinationParam() + "&travelmode=driving", "_blank", "noopener");
+}
+function getDirectionsFromHere() {
+  const btn = $("#directions-btn");
+  const note = $("#directions-note");
+  note.classList.remove("err");
+
+  if (!("geolocation" in navigator)) {
+    note.classList.add("err");
+    note.textContent = "Your browser can't share your location, so we opened the pharmacy on the map \u2014 add your starting point there.";
+    openPharmacyOnMap();
+    return;
+  }
+
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "Finding your location\u2026";
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const origin = pos.coords.latitude + "," + pos.coords.longitude;
+      window.open("https://www.google.com/maps/dir/?api=1&origin=" + origin + "&destination=" + destinationParam() + "&travelmode=driving", "_blank", "noopener");
+      btn.disabled = false;
+      btn.textContent = original;
+      note.textContent = "";
+    },
+    () => {
+      btn.disabled = false;
+      btn.textContent = original;
+      note.classList.add("err");
+      note.textContent = "Location was blocked or unavailable, so we opened the pharmacy on the map \u2014 Google Maps will ask you to add a starting point.";
+      openPharmacyOnMap();
+    },
+    { enableHighAccuracy: true, timeout: 8000 }
+  );
 }
 
 /* ---------- Opening hours ---------- */
@@ -394,6 +439,148 @@ function renderRefills() {
   }).join("");
 }
 
+/* ---------- AI Assistant (rule-based, on-page knowledge only) ---------- */
+const AI_QUICK_QUESTIONS = [
+  "What medicines do you sell?",
+  "What are your opening hours?",
+  "Where are you located?",
+  "Do you offer delivery?"
+];
+
+// Phrases that signal a medical question (diagnosis, dosage, what-to-take).
+// The assistant never answers these itself — it always hands off to a pharmacist.
+const AI_MEDICAL_PATTERN = /\b(diagnos|dosage|dose|overdose|symptom|which medicine (should|can) i|what (should|can) i take|treat my|prescribe|side effect|is it safe (for|to)|can i take|allerg(y|ic) to)\b/;
+
+function aiWaLink(label, message) {
+  const num = whatsappNumber();
+  if (!num) return "";
+  return ' <a class="ai-wa-link" href="https://wa.me/' + num + '?text=' + encodeURIComponent(message) + '" target="_blank" rel="noopener">' + label + " &rarr;</a>";
+}
+
+function aiFindProducts(term) {
+  const q = term.toLowerCase().trim();
+  if (!q) return [];
+  return PRODUCTS.filter((p) => (p.name + " " + p.detail).toLowerCase().includes(q));
+}
+
+function aiListCategories() {
+  return CATEGORIES.filter((c) => c.id !== "all").map((c) => c.label.toLowerCase()).join(", ");
+}
+
+function aiRespond(raw) {
+  const q = raw.toLowerCase().trim();
+
+  if (AI_MEDICAL_PATTERN.test(q)) {
+    return "I'm not able to give medical advice, dosages or a diagnosis \u2014 that needs a qualified pharmacist to look at your case properly." +
+      aiWaLink("Ask our pharmacist", "Hello " + CONFIG.name + ", I have a health question for the pharmacist: " + raw.trim());
+  }
+
+  if (/\b(open|hour|close|when.*(open|close))\b/.test(q)) {
+    const s = pharmacyStatus();
+    const weekday = CONFIG.hours[1];
+    const sunday = CONFIG.hours[0];
+    return "Monday to Saturday we're open " + fmtTime(weekday[0]) + " to " + fmtTime(weekday[1]) +
+      (sunday ? ", and Sunday " + fmtTime(sunday[0]) + " to " + fmtTime(sunday[1]) + "." : ", and closed on Sunday.") +
+      " Right now: " + s.text + ".";
+  }
+
+  if (/\b(where|location|address|situated|direction|map)\b/.test(q)) {
+    return "We're at " + CONFIG.address + ". Use the \u201cGet directions from my location\u201d button in the Visit us section and Google Maps will route you straight here.";
+  }
+
+  if (/\b(contact|phone|call you|number|email|reach you)\b/.test(q)) {
+    return "Call or WhatsApp us on " + CONFIG.phoneDisplay + ", or email " + CONFIG.email + ".";
+  }
+
+  if (/\b(deliver|bring it to me|come to my house)\b/.test(q)) {
+    return "Yes \u2014 choose \u201cDeliver to me\u201d when you order or send a prescription, and we'll confirm whether we can reach you and the delivery fee before anything is sent.";
+  }
+
+  if (/\b(what.*(medicine|drug|sell|stock)|medicines? (list|available)|products?)\b/.test(q)) {
+    return "We stock " + aiListCategories() + ", among others. Try the search box in \u201cFind a medicine\u201d above, or just tell me a name here and I'll check.";
+  }
+
+  const askMatch = q.match(/\b(?:do you have|got any|looking for|need|find|request|want|help me find)\s+([a-z0-9 ]{3,})/);
+  const term = askMatch ? askMatch[1].trim() : (q.length > 2 && q.length < 40 ? q : "");
+  if (term) {
+    const hits = aiFindProducts(term);
+    if (hits.length) {
+      return "Yes \u2014 we have " + hits.slice(0, 3).map((p) => p.name + " (" + money(p.price) + ")").join(", ") + "." +
+        " Add it from the \u201cFind a medicine\u201d list above" + aiWaLink("Or ask on WhatsApp", "Hello " + CONFIG.name + ", do you have " + term + " in stock?") + ".";
+    }
+  }
+
+  if (/^(hi|hello|hey|good (morning|afternoon|evening))\b/.test(q)) {
+    return "Hello! \uD83D\uDC4B Ask me about our medicines, opening hours, location, delivery, or how to reach us.";
+  }
+
+  if (/\b(thank|thanks)\b/.test(q)) {
+    return "You're welcome! Anything else I can help with?";
+  }
+
+  return "I couldn't match that to something on this page. A team member can help directly \u2014" +
+    aiWaLink("Ask on WhatsApp", "Hello " + CONFIG.name + ", I have a question: " + raw.trim()) + ".";
+}
+
+function aiAddMessage(html, who) {
+  const box = $("#ai-messages");
+  const wrap = document.createElement("div");
+  wrap.className = "ai-msg ai-msg-" + who;
+  wrap.innerHTML = html;
+  box.appendChild(wrap);
+  box.scrollTop = box.scrollHeight;
+}
+
+function aiInit() {
+  const toggle = $("#ai-toggle");
+  const panel = $("#ai-panel");
+  const closeBtn = $("#ai-close");
+  const form = $("#ai-form");
+  const input = $("#ai-input");
+  const quick = $("#ai-quick");
+
+  quick.innerHTML = AI_QUICK_QUESTIONS.map((q) => '<button type="button" class="chip ai-chip">' + esc(q) + "</button>").join("");
+
+  function openAi() {
+    panel.classList.add("open");
+    panel.setAttribute("aria-hidden", "false");
+    toggle.setAttribute("aria-expanded", "true");
+    if (!$("#ai-messages").children.length) {
+      aiAddMessage("Hello! \uD83D\uDC4B I'm " + CONFIG.name + "'s AI assistant. How can I help you today?", "bot");
+    }
+    input.focus();
+  }
+  function closeAi() {
+    panel.classList.remove("open");
+    panel.setAttribute("aria-hidden", "true");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  toggle.addEventListener("click", () => {
+    panel.classList.contains("open") ? closeAi() : openAi();
+  });
+  closeBtn.addEventListener("click", closeAi);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && panel.classList.contains("open")) closeAi();
+  });
+
+  quick.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ai-chip");
+    if (!btn) return;
+    input.value = btn.textContent;
+    form.requestSubmit();
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    aiAddMessage(esc(text), "user");
+    input.value = "";
+    setTimeout(() => aiAddMessage(aiRespond(text), "bot"), 250);
+  });
+}
+
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   applyConfig();
@@ -531,4 +718,10 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     openWhatsApp("Hello " + CONFIG.name + ", I have a question.");
   });
+
+  /* Directions button */
+  $("#directions-btn").addEventListener("click", getDirectionsFromHere);
+
+  /* AI assistant */
+  aiInit();
 });
