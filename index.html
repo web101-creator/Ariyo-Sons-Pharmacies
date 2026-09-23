@@ -267,7 +267,11 @@
             <p><a data-cfg-tel href="tel:" ><span data-cfg="phoneDisplay">+234 903 679 3927</span></a></p>
             <p><a data-cfg-mail href="mailto:"><span data-cfg="email">ariyoandsonpharmacy@gmail.com</span></a></p>
           </address>
-          <a class="btn btn-green" data-cfg-map href="#" target="_blank" rel="noopener">Get directions</a>
+          <div class="visit-actions">
+            <button class="btn btn-green" id="directions-btn" type="button">Get directions from my location</button>
+            <a class="btn btn-ghost" data-cfg-map href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+          </div>
+          <p class="directions-note" id="directions-note"></p>
         </div>
 
         <div class="panel">
@@ -276,6 +280,12 @@
             <caption class="sr-only">Opening hours by day</caption>
             <tbody id="hours-list"></tbody>
           </table>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1397.424822375983!2d6.081299070550022!3d7.841118421969191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sng!4v1790147625426!5m2!1sen!2sng" width="600" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map showing Ariyo & Sons Pharmacy location"></iframe>
         </div>
       </div>
     </section>
@@ -371,5 +381,34 @@
   </aside>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ AI ASSISTANT ============ -->
+  <button id="ai-toggle" class="ai-fab" type="button" aria-haspopup="dialog" aria-controls="ai-panel" aria-expanded="false">
+    <span class="ai-fab-icon" aria-hidden="true">&#129302;</span>
+    <span class="ai-fab-label">Ask Ariyo AI</span>
+  </button>
+
+  <aside id="ai-panel" class="ai-panel" role="dialog" aria-labelledby="ai-title" aria-hidden="true">
+    <div class="ai-head">
+      <div>
+        <p class="ai-title" id="ai-title">&#129302; Ariyo AI Assistant</p>
+        <p class="ai-sub">Medicines, hours, location and orders</p>
+      </div>
+      <button id="ai-close" class="icon-btn" type="button" aria-label="Close assistant">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div id="ai-messages" class="ai-messages" aria-live="polite"></div>
+
+    <div id="ai-quick" class="ai-quick" role="group" aria-label="Suggested questions"></div>
+
+    <form id="ai-form" class="ai-form" novalidate>
+      <label for="ai-input" class="sr-only">Ask a question</label>
+      <input id="ai-input" type="text" placeholder="Ask about medicines, hours, location&hellip;" autocomplete="off">
+      <button type="submit" class="btn btn-green btn-sm">Send</button>
+    </form>
+    <p class="ai-disclaimer">General information only &mdash; not medical advice. For dosage, symptoms or what to take, please speak with our pharmacist.</p>
+  </aside>
 </body>
 </html>
